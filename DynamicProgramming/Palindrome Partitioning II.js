@@ -108,3 +108,46 @@ var minCut = function (s) {
   }
   return dp[0][n-1];
 }
+
+// using 1d approach
+
+
+var minCut = function(s){
+   let n = s.length;
+   
+  let dp = Array.from({length:n},()=> new Array(n).fill(0));
+  
+  for(let l = 1;l<=n;l++){
+    for(let i = 0;i<= n - l;i++){
+      let j = i + l -1;
+      if(l === 1){
+        dp[i][j] = true;
+      }else if(l === 2 && s[i] === s[j]){
+        dp[i][j] = true;
+      }else if(s[i] === s[j] && dp[i+1][j-1]){
+        dp[i][j] = true;
+      }else{
+        dp[i][j] = false;
+      }
+    }
+  }
+  
+  let memo = Array.from({length:n}).fill(0);
+  
+  //
+  for(let i = 0;i<n;i++){
+    let minCuts = i;
+    for(let start = 0;start <= i;start++){
+      if(dp[start][i]){
+        if(start === 0){
+          minCuts = 0;
+        }else{
+           minCuts = Math.min(minCuts,1 + dp[start - 1]);
+        }
+    }
+  }
+  
+   dp[i] = minCuts;
+}
+
+}

@@ -106,34 +106,43 @@ var countSubstrings = function(s) {
 
 //tabulation approach simple solution
 var countSubstrings = function(s) {
-  let n = s.length;
-  let dp = Array.from({length:n},()=> new Array(n).fill(-1));
-  
- // console.log(dp);
-  
-  //substring is a palingdrome or not
-  let count = 0;
-  for(let l = 1;l<=n;l++){
-    for(let i = 0;i<= n - l;i++){
-      let j  = i + l - 1;
-      if(l === 1){
-        //diagonal
-        dp[i][j] = true;
-        count++;
-      }else{
-        if(s[i] === s[j] && dp[i+1][j-1]){
+    let n = s.length;
+    
+    let dp = Array.from({length:n},()=> new Array(n).fill(-1));
+    
+    let count = 0;
+    for(let l = 1;l<=n;l++){
+      for(let i = 0;i<= n - l;i++){
+        let j = i + l - 1;
+        
+        if(l === 1){
           dp[i][j] = true;
           count++;
-        }else{
-          dp[i][j] = false;
+        }else if(l === 2){
+          if(s[i] === s[j]){ 
+            count++;
+            dp[i][j]= true;
+          }
+          else{
+            dp[i][j] = false;
+          }
         }
+        else{
+          //so firstly will check
+          if(s[i]=== s[j] && dp[i+1][j-1]){
+             count++;
+            dp[i][j] = true;
+          }else{
+            dp[i][j] = false;
+          }
+        }
+        
       }
     }
-  }
-  
-  
- // console.log(dp);
- return count;
+    
+    
+    return count;
 };
+
 
 console.log(countSubstrings("abc"))

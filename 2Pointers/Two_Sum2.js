@@ -20,7 +20,7 @@ var twoSum = function(numbers, target) {
         }else if(sum > target){
             right--;
         }else{
-            return [left + 1, right + 1];
+            return [left + 1, right + 1]; //+1 because 1index array
         }
     }
 };

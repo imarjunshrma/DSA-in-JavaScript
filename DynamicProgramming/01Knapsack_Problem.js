@@ -59,3 +59,50 @@ function knapSack(W, wt, val, n) {
     }
    return helper(0,W);
 }
+
+//tabulation
+
+
+function knapsack(W,val,wt){
+  let n = val.length;
+  let dp = Array.from({length:n + 1},()=> Array.from({length:W+1}).fill(0));;
+
+
+ for(let i = 1;i<= n;i++){
+   for(let j = 1;j<= W;j++){
+     let exclude = dp[i - 1][j];
+     let include = 0;
+     
+     if(wt[i - 1] <= j){
+       include = val[i - 1] + dp[i - 1][j - wt[i -1]];
+     }
+     
+     dp[i][j] = Math.max(exclude,include);
+   }
+ }
+}
+// o(n* w) 
+
+
+//space optimised tabulation
+
+function knapsack(W,val,wt){
+  let n = val.length;
+
+ let prev = new Array(W + 1).fill(0);
+ let curr = new Array(W + 1).fill(0);
+ 
+ for(let i = 1;i<= n;i++){
+   for(let j = 1;j<= W;j++){
+     let exclude = prev[j];
+     
+     let include = 0;
+     
+     if(wt[i-1] <= j){
+       include = val[i - 1] + prev[j - wt[i - 1]];
+     }
+     
+     curr[j] = Math.max(exclude,include);
+   }
+ }
+}
